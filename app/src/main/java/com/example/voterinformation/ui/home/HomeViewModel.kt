@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voterinformation.network.LowerBodyListService
+import com.example.voterinformation.repository.OfficialsListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val lowerBodyListService: LowerBodyListService) :
+class HomeViewModel @Inject constructor(
+    private val officialsListRepository: OfficialsListRepository) :
     ViewModel() {
+
+    val data = officialsListRepository.items
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -23,14 +27,14 @@ class HomeViewModel @Inject constructor(private val lowerBodyListService: LowerB
     init {
         Log.d("init"," made it")
         viewModelScope.launch(Dispatchers.IO) {
-            data()
+            officialsListRepository.refreshItemList()
         }
         Log.d("where", " you at bb?")
     }
 
-    suspend fun data() {
+    suspend fun refresh() {
         try {
-            Log.d("items", lowerBodyListService.getLowerBodyList().toString())
+
         } catch (e: Exception) {
             Log.d("Exception: ", e.toString())
         }

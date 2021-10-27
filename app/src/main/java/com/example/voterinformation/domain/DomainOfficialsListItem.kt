@@ -1,11 +1,11 @@
 package com.example.voterinformation.domain
 
-import com.example.voterinformation.network.models.Division
-import com.example.voterinformation.network.models.Office
-import com.example.voterinformation.network.models.Official
+import com.example.voterinformation.data.models.*
 
 data class DomainOfficialsListItem (
-    val offices: List<Office>,
-    val officials: List<Official>,
-    val divisions: Map<String, Division>
+    var divisions: Divisions,
+    var kind: String,
+    var normalizedInput: NormalizedInput,
+    var offices: List<Office>,
+    var officials: List<Official>
 )

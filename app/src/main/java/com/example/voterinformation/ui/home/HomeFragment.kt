@@ -1,6 +1,7 @@
 package com.example.voterinformation.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -38,6 +39,21 @@ class HomeFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        homeViewModel.data.observe(viewLifecycleOwner, {
+            Log.d("it's tryin ", "something")
+            if (it != null) {
+                val offices = it.offices
+                val officials = it.officials
+                Log.d("experiment",
+                it.divisions.entries.forEach { it.value.officeIndices?.forEach { offices.get(it).officialIndices.forEach { officials.get(it) } } }.toString()
+                )
+            }
+        })
     }
 
     override fun onDestroyView() {
