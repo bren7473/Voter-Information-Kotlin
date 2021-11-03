@@ -49,9 +49,13 @@ class HomeFragment : Fragment() {
             if (it != null) {
                 val offices = it.offices
                 val officials = it.officials
-                Log.d("experiment",
-                it.divisions.entries.forEach { it.value.officeIndices?.forEach { offices.get(it).officialIndices.forEach { officials.get(it) } } }.toString()
-                )
+                it.divisions.entries.forEach { it.value?.officeIndices?.forEach {
+                    if (it != null) {
+                        offices?.get(it)?.officialIndices?.forEach {
+                            Log.d("officials", officials?.get(it).toString()) }
+                    }
+                } }
+
             }
         })
     }

@@ -16,11 +16,11 @@ class OfficialsListRepository @Inject constructor(
 
     suspend fun refreshItemList() {
         try {
-            val items = lowerBodyListService.getLowerBodyList()
+            val items: RepsByAddress = lowerBodyListService.getLowerBodyList()
             Log.d("Items: ", items.toString())
-            database.officialsDao.insertAll(items)
+            database.officialsDao.insert(items)
         } catch (e: Exception) {
-            Log.d("Exception: ", e.message.toString() + "::" + e.cause.toString() + "::" + e.localizedMessage)
+            Log.d("Exception: ", e.toString())
         }
     }
 }

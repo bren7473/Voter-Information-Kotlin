@@ -15,10 +15,10 @@ interface OfficialsDao {
 
         // updates local storage if item is updated
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        fun insertAll(items: RepsByAddress)
+        fun insert(items: RepsByAddress)
 }
 
-@Database(entities = [RepsByAddress::class], version = 40, exportSchema = false)
+@Database(entities = [RepsByAddress::class], version = 12, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OfficialsDatabase : RoomDatabase() {
         abstract val officialsDao: OfficialsDao

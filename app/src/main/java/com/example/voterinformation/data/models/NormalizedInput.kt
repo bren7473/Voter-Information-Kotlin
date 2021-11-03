@@ -4,8 +4,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class NormalizedInput(
-    var city: String?,
-    var line1: String?,
-    var state: String?,
-    var zip: String?
+    val line1: String?,
+    val city: String?,
+    val state: String?,
+    val zip: Int?
 )

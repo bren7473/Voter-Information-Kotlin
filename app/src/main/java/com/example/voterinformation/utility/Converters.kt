@@ -9,8 +9,11 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 class Converters {
 
+    private val baseMoshi: Moshi = Moshi.Builder()
+        .build()
+
     private val officeJsonAdapter by lazy {
-        val moshi = Moshi.Builder()
+        val moshi = baseMoshi.newBuilder()
             .add(KotlinJsonAdapterFactory())
             .build()
         val officeList = Types.newParameterizedType(List::class.java, Office::class.java)
@@ -18,7 +21,7 @@ class Converters {
     }
 
     private val officialJsonAdapter by lazy {
-        val moshi = Moshi.Builder()
+        val moshi = baseMoshi.newBuilder()
             .add(KotlinJsonAdapterFactory())
             .build()
         val officialList = Types.newParameterizedType(List::class.java, Official::class.java)
@@ -26,38 +29,29 @@ class Converters {
     }
 
     private val divisionJsonAdapter by lazy {
-        val moshi = Moshi.Builder()
+        val moshi = baseMoshi.newBuilder()
             .add(KotlinJsonAdapterFactory())
             .build()
-        val division = Types.newParameterizedType(Map::class.java, Division::class.java)
+        val division = Types.newParameterizedType(Map::class.java, String::class.java, Division::class.java)
         return@lazy moshi.adapter<Map<String, Division>>(division)
     }
 
-    private val divisionsJsonAdapter by lazy {
-        val moshi = Moshi.Builder()
+    private val normalizedInputJsonAdapter by lazy {
+        val moshi = baseMoshi.newBuilder()
             .add(KotlinJsonAdapterFactory())
             .build()
-        val divisions = Types.newParameterizedType(Division::class.java)
-        return@lazy moshi.adapter<Divisions>(divisions)
-    }
-
-    private val normalizedInputAdapter by lazy {
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-        val normalizedInput =
-            Types.newParameterizedType(List::class.java, NormalizedInput::class.java)
+        val normalizedInput = Types.newParameterizedType(NormalizedInput::class.java)
         return@lazy moshi.adapter<NormalizedInput>(normalizedInput)
     }
 
     @TypeConverter
-    fun fromOffice(office: List<Office>): String {
+    fun fromOffice(office: List<Office>?): String? {
         return officeJsonAdapter.toJson(office)
     }
 
     @TypeConverter
-    fun toOffice(json: String): List<Office>? {
-        return officeJsonAdapter.fromJson(json)
+    fun toOffice(json: String?): List<Office>? {
+        return json?.let {officeJsonAdapter.fromJson(json)}
     }
 
     @TypeConverter
@@ -71,23 +65,22 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromDivision(division: Map<String, Division>): String {
+    fun fromDivision(division: Map<String, Division>?): String? {
         return divisionJsonAdapter.toJson(division)
     }
 
     @TypeConverter
-    fun toDivision(json: String): Map<String, Division>? {
-        return divisionJsonAdapter.fromJson(json)
+    fun toDivision(json: String?): Map<String, Division>? {
+        return json?.let {divisionJsonAdapter.fromJson(json)}
     }
 
     @TypeConverter
-    fun fromNormalizedInput(normalizedInput: NormalizedInput): String {
-        return normalizedInputAdapter.toJson(normalizedInput)
+    fun fromNormalizedInput(normalizedInput: NormalizedInput?): String? {
+        return normalizedInputJsonAdapter.toJson(normalizedInput)
     }
 
     @TypeConverter
-    fun toNormalizedInput(json: String): NormalizedInput? {
-        return normalizedInputAdapter.fromJson(json)
+    fun toNormalizedInput(json: String?): NormalizedInput? {
+        return json?.let {normalizedInputJsonAdapter.fromJson(json)}
     }
-
 }

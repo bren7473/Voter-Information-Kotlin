@@ -4,9 +4,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Address(
-    val city: String,
-    val line1: String,
-    val line2: String = "your moms house",
-    val state: String,
-    val zip: String
+    val city: String?,
+    val line1: String?,
+    val line2: String?,
+    val state: String?,
+    val zip: Int?
 )
