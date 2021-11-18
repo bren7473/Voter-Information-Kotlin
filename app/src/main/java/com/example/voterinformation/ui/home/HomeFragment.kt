@@ -1,26 +1,26 @@
 package com.example.voterinformation.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.voterinformation.R
 import com.example.voterinformation.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private val homeViewModel: HomeViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    @Inject
+    lateinit var adapter: OfficialListAdapter
+
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,36 +28,25 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        _binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_home, container, false
+        )
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding.viewModel = homeViewModel
+        binding.recyclerView.adapter = adapter
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         homeViewModel.data.observe(viewLifecycleOwner, {
-            Log.d("it's tryin ", "something")
-            if (it != null) {
-                val offices = it.offices
-                val officials = it.officials
-                it.divisions.entries.forEach { it.value?.officeIndices?.forEach {
-                    if (it != null) {
-                        offices?.get(it)?.officialIndices?.forEach {
-                            Log.d("officials", officials?.get(it).toString()) }
-                    }
-                } }
-
-            }
+            adapter.submitList(it)
         })
+        adapter.clickListener.onItemClick = {
+
+        }
     }
 
     override fun onDestroyView() {
