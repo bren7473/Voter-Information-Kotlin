@@ -10,6 +10,6 @@ data class Official (
     val name: String?,
     val party: String?,
     val phones: List<String>?,
-    var photoUrl: String?,
+    var photoUrl: String = "None",
     val urls: List<String>?
 )

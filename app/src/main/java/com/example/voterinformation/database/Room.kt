@@ -19,7 +19,7 @@ interface OfficialsDao {
         fun insert(items: List<LocalRepsByAddress>)
 }
 
-@Database(entities = [LocalRepsByAddress::class], version = 28, exportSchema = false)
+@Database(entities = [LocalRepsByAddress::class], version = 29, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OfficialsDatabase : RoomDatabase() {
         abstract val officialsDao: OfficialsDao

@@ -4,106 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+        style="@style/Widget.App.CardView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:onClick="@{() -> clickListener.onClick(data)}"
-        style="@style/Widget.App.CardView">
+        android:onClick="@{() -> clickListener.onClick(data)}">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:shrinkColumns="0">
-            <TableRow
-                android:gravity="start">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="Division: "/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="@{data.component2()}"/>
-            </TableRow>
-            <TableRow
-                android:gravity="start">
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="150dp"
+                android:layout_height="170dp"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp"
+                app:imageUrl="@{data.component4().photoUrl}"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="Office: "/>
+            <TableLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:shrinkColumns="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="@{data.component3()}"/>
-            </TableRow>
-            <TableRow
-                android:gravity="start">
+                <TableRow android:gravity="start"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="Official: "/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="@{data.official.name}"/>
-            </TableRow>
-            <TableRow
-                android:gravity="start">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="@{data.component4().name}" />
+                </TableRow>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="Party: "/>
+                <TableRow android:gravity="start"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:lines="1"
-                    android:singleLine="true"
-                    android:text="@{data.component4().party}"/>
-            </TableRow>
-        </TableLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="@{data.component3()}" />
+                </TableRow>
+
+                <TableRow android:gravity="start"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="@{data.component2()}" />
+                </TableRow>
+
+                <TableRow android:gravity="start"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="@{data.component4().party}" />
+                </TableRow>
+            </TableLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

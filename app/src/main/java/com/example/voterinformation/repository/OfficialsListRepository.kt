@@ -29,19 +29,25 @@ class OfficialsListRepository @Inject constructor(
             val offices = items.offices
             val officials = items.officials
 
+            Log.d("items", items.toString())
+
             items.divisions.entries.forEach {
                 division = it.value.name
                 it.value.officeIndices?.forEach {
                     office = offices?.get(it)?.name.toString()
                     officeRole = offices?.get(it)?.roles
                     offices?.get(it)?.officialIndices?.forEach {
+
                         val localOfficial: LocalRepsByAddress? =
-                            officials?.get(it)?.name?.let { it1 -> officials?.get(it)?.let { it2 ->
-                                it2.name?.let { it3 -> Log.d("it2", it3) }
-                                LocalRepsByAddress(it1, division, office,
-                                    it2
-                                )
-                            } }
+                            officials?.get(it)?.name?.let { it1 ->
+                                officials?.get(it)?.let { it2 ->
+                                    LocalRepsByAddress(
+                                        it1, division, office,
+                                        it2
+                                    )
+                                }
+                            }
+
                         if (localOfficial != null) {
                             localOfficialArrayList.add(localOfficial)
                         }
